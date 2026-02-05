@@ -3,11 +3,12 @@
 Use this library to write Python 3 applications that integrate with [Apache Accumulo](https://accumulo.apache.org/).
 
 Library features include:
+
 - Convenience classes for creating Accumulo objects, such as Mutations and Ranges
 - A blocking, synchronous client
-- A non-blocking, asynchronous client for applications using the [asyncio](https://docs.python.org/3/library/asyncio.html) 
+- A non-blocking, asynchronous client for applications using the [asyncio](https://docs.python.org/3/library/asyncio.html)
   module.
- 
+
 ```python
 import accumulo
 from accumulo import Mutation, RangePrefix, ScanOptions
@@ -36,7 +37,7 @@ __Note__. This library is a work in progress. It has been tested with Accumulo 1
 
 ## Installation
 
-This library is not yet available on the [Python Package Index](https://pypi.org/). 
+This library is not yet available on the [Python Package Index](https://pypi.org/).
 
 Clone the repository and use `pip` to install locally into your environment.
 
@@ -50,6 +51,7 @@ Optionally include the `-e` option with `pip` to install the library in *edit mo
 development.
 
 ```
+
 pip install -e .
 ```
 
@@ -69,7 +71,7 @@ the generated bindings in order to support more practical development.
 
 A __proxy connection__ represents the connection to the Accumulo Proxy server.
 
-Use the `AccumuloProxyConnection` and `AccumuloProxyConnectionParams` classes to create a proxy connection to Accumulo 
+Use the `AccumuloProxyConnection` and `AccumuloProxyConnectionParams` classes to create a proxy connection to Accumulo
 Proxy.
 
 ```python
@@ -85,6 +87,7 @@ proxy_connection = AccumuloProxyConnection()
 Alternatively, use the proxy connection instance as a context manager to automatically close it.
 
 ```
+
 with proxy_connection:
     pass
 ```
@@ -104,7 +107,7 @@ proxy_connection.client.changeUserAuthorizations(login, 'user', [b'ADMIN'])
 
 ### Creating a blocking connector
 
-A __connector__ is an authenticated interface to Accumulo, and is used to perform actions that require authentication, 
+A __connector__ is an authenticated interface to Accumulo, and is used to perform actions that require authentication,
 such as creating tables or scanners. A __context__ is used to create a connector.
 
 Use the `AccumuloProxyConnectionContext` class to create a blocking connector instance.
@@ -191,9 +194,9 @@ object as a second parameter.
 ### Scan with specific authorizations
 
 `ScanOptions` and `BatchScanOptions` both support an `authorizations` keyword argument, which may be used to configure
-a scanner with specific authorizations. 
- 
-Authorizations must be provided as an iterable of binary values. We may use the `AuthorizationSet` class to create a 
+a scanner with specific authorizations.
+
+Authorizations must be provided as an iterable of binary values. We may use the `AuthorizationSet` class to create a
 `frozenset` of binary values from binary and non-binary arguments.
 
 ```python
@@ -210,7 +213,7 @@ with connector.create_scanner(
 
 ### Scan specific columns
 
-`ScanOptions` and `BatchScanOptions` both support a `columns` keyword argument, which may be used to only retrieve 
+`ScanOptions` and `BatchScanOptions` both support a `columns` keyword argument, which may be used to only retrieve
 specific columns. Use the `ScanColumn` class to define column, which include a column family and an optional column
 qualifier.
 
@@ -233,7 +236,7 @@ with connector.create_scanner(
 
 ### Use scan ranges
 
-`ScanOptions` and `BatchScanOptions` respectively accept an optional `range` or `ranges` keyword argument. Use the 
+`ScanOptions` and `BatchScanOptions` respectively accept an optional `range` or `ranges` keyword argument. Use the
 `Key`, `Range`, `RangeExact`, and `RangePrefix` classes to define ranges.
 
 ```python
@@ -298,15 +301,15 @@ with connector.create_scanner(
 
 ### Writing asynchronous, non-blocking applications
 
-The examples above are all examples of blocking code. This may be fine for scripts, but it is disadvantageous for 
+The examples above are all examples of blocking code. This may be fine for scripts, but it is disadvantageous for
 applications such as web services that need to service client requests concurrently. Fortunately, this library includes
 an asynchronous connector that may be used to call the above methods in a non-blocking fashion using Python's
 *async/await* syntax.
 
 #### Creating an asynchronous connector
 
-Earlier, we used the `AccumuloProxyConnectionContext` class to create a blocking connector. To create an  asynchronous 
-connector, we will use the `AccumuloProxyConnectionPoolContextAsync` class. 
+Earlier, we used the `AccumuloProxyConnectionContext` class to create a blocking connector. To create an  asynchronous
+connector, we will use the `AccumuloProxyConnectionPoolContextAsync` class.
 
 ```python
 from accumulo import AccumuloProxyConnectionPoolContextAsync
@@ -314,8 +317,8 @@ from accumulo import AccumuloProxyConnectionPoolContextAsync
 async_conn = await AccumuloProxyConnectionPoolContextAsync().create_connector('user', 'secret')
 ```
 
-Unlike the blocking connector, the non-blocking connector uses a pool of proxy connection objects, and uses a 
-[thread pool executor](https://docs.python.org/3/library/asyncio-eventloop.html#asyncio.loop.run_in_executor) to 
+Unlike the blocking connector, the non-blocking connector uses a pool of proxy connection objects, and uses a
+[thread pool executor](https://docs.python.org/3/library/asyncio-eventloop.html#asyncio.loop.run_in_executor) to
 call the low-level bindings outside of the main event loop.
 
 In the example below, we explore some more specific options for configuring an asynchronous connector.
