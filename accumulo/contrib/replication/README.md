@@ -6,7 +6,7 @@ Use the __Accumulo Replication Framework (ARF)__ to asynchronously publish and
 replicate mutations over an AMQP messaging infrastructure such as RabbitMQ.
 
 ARF uses [Protocol Buffers](https://developers.google.com/protocol-buffers) to
-encode batches of mutations in AMQP messages. 
+encode batches of mutations in AMQP messages.
 
 ARF includes a Python client for publishing mutations, as well as a Python
 consumer application for writing published mutations to Accumulo. ARF must
@@ -63,6 +63,7 @@ AMQP_QUEUE=myqueue python -m accumulo.contrib.replication.consumer
 ```
 
 The CLI supports the following configuration:
+
 - `AMQP_QUEUE`. Required. The name of the AMQP queue from which to consume records.
 - `AMQP_URL`. The AMQP URL. Defaults to *amqp://guest:guest@localhost:5672*.
 - `ACCUMULO_PROXY_HOSTNAME`. Defaults to *127.0.0.1*.
