@@ -7,7 +7,7 @@ import logging
 
 import pika
 
-from google.protobuf.message import DecodeError
+from google.protobuf import DecodeError
 
 from accumulo import AccumuloConnector, Mutation
 from accumulo.contrib.replication import accumulo_replication_pb2
